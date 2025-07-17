@@ -7,12 +7,12 @@ description 'Vehicle Blueprints'
 version '1.0.0'
 
 client_scripts {
-    'client.lua',
+    'client/*.lua',
     '@ox_lib/init.lua',
 }
 
 server_scripts {
-    'server.lua',
+    'server/*.lua',
     '@ox_lib/init.lua',
     "@oxmysql/lib/MySQL.lua",
 }
