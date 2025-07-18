@@ -10,7 +10,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Dominator',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:dominator4Blueprint'
         },
@@ -22,7 +21,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a ZR380',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:zr380Blueprint'
         },
@@ -34,7 +32,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Ratloader',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:ratloaderBlueprint'
         },
@@ -46,7 +43,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Slamvan',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:slamvan3Blueprint'
         },
@@ -58,7 +54,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Ruston',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:rustonBlueprint'
         },
@@ -70,7 +65,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Dukes',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:dukesBlueprint'
         },
@@ -82,7 +76,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Ruiner',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:ruinerBlueprint'
         },
@@ -94,7 +87,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Blista Compact',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:blista2Blueprint'
         },
@@ -106,7 +98,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Phoenix',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:phoenixBlueprint'
         },
@@ -118,7 +109,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Gauntlet',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:gauntletBlueprint'
         },
@@ -130,7 +120,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to build a Buccaneer',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:buccaneerBlueprint'
         },
@@ -142,7 +131,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to place build a Wastelander',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:wastelanderBlueprint'
         },
@@ -154,7 +142,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to place build a Dune',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:duneBlueprint'
         },
@@ -166,7 +153,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to place build a Dune 3',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:dune3Blueprint'
         },
@@ -178,7 +164,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to place build a Dune 4',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:dune4Blueprint'
         },
@@ -190,7 +175,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to place build a Brickade',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:brickadeBlueprint'
         },
@@ -202,7 +186,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to place build a Brickade 2',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:brickade2Blueprint'
         },
@@ -214,7 +197,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to place build a Manchez 3',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:manchez3Blueprint'
         },
@@ -226,7 +208,6 @@ This resource is a script where players can place down a vehicle blueprint and p
         stack = false,
         close = true,
         description = 'A blueprint to place build a Ratbike',
-        image = 'vehicle_blueprint.png',
         client = {
             event = 'lx-vehicleblueprint:ratbikeBlueprint'
         },
