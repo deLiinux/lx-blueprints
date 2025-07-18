@@ -1,6 +1,10 @@
-# lx-blueprints
+# lx-blueprints (WIP)
 
 This resource is a script where players can place down a vehicle blueprint and proceed to build it with material.
+
+To add:
+Persist placed blueprints across restarts?
+...
 
 * Items used in ox_inventory
 ```
