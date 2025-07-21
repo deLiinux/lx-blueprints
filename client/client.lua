@@ -253,6 +253,7 @@ RegisterNetEvent('lx-vehicleblueprint:showRepairMenu', function(vehicle)
         
                 if frameCount < 1 then
                     TriggerEvent('ox_lib:notify', {type='error', description='You need at least 1 vehicle frame to add it.'})
+                    TriggerEvent('lx-vehicleblueprint:showRepairMenu', vehicle)
                     return
                 end
         
@@ -282,6 +283,7 @@ RegisterNetEvent('lx-vehicleblueprint:showRepairMenu', function(vehicle)
                 
                 if ironCount < 1 then
                     TriggerEvent('ox_lib:notify', {type='error', description='You need at least 1 iron to add it.'})
+                    TriggerEvent('lx-vehicleblueprint:showRepairMenu', vehicle)
                     return
                 end
                 
@@ -312,6 +314,7 @@ RegisterNetEvent('lx-vehicleblueprint:showRepairMenu', function(vehicle)
         
                 if aluminiumCount < 1 then
                     TriggerEvent('ox_lib:notify', {type='error', description='You need at least 1 aluminium to add it.'})
+                    TriggerEvent('lx-vehicleblueprint:showRepairMenu', vehicle)
                     return
                 end
         
@@ -341,6 +344,7 @@ RegisterNetEvent('lx-vehicleblueprint:showRepairMenu', function(vehicle)
         
                 if metalCount < 1 then
                     TriggerEvent('ox_lib:notify', {type='error', description='You need at least 1 metal scrap to add it.'})
+                    TriggerEvent('lx-vehicleblueprint:showRepairMenu', vehicle)
                     return
                 end
         
@@ -369,6 +373,7 @@ RegisterNetEvent('lx-vehicleblueprint:showRepairMenu', function(vehicle)
         
                 if partsCount < 1 then
                     TriggerEvent('ox_lib:notify', {type='error', description='You need at least 1 car part to add it.'})
+                    TriggerEvent('lx-vehicleblueprint:showRepairMenu', vehicle)
                     return
                 end
         
