@@ -1,9 +1,26 @@
 
 local QBCore = exports['qbx-core']:GetCoreObject()
 
-RegisterNetEvent('lx-vehicleblueprint:placeStrippedVehicle', function(modelName, coords, heading)
-    TriggerClientEvent('lx-vehicleblueprint:spawnStrippedVehicle', -1, modelName, coords, heading)
+RegisterNetEvent('lx-vehicleblueprint:placeStrippedVehicle', function(model, coords, heading)
+    local src = source
+    local player = QBCore.Functions.GetPlayer(src)
+    if not player then return end
+
+    local citizenid = player.PlayerData.citizenid
+
+    exports.oxmysql:insert('INSERT INTO vehicle_blueprints (citizenid, model, x, y, z, heading) VALUES (?, ?, ?, ?, ?, ?)', {
+        citizenid, 
+        model, 
+        coords.x, 
+        coords.y, 
+        coords.z, 
+        heading
+    }, function(insertId)
+        TriggerClientEvent('lx-vehicleblueprint:spawnStrippedVehicle', -1, model, coords, heading)
+    end)
 end)
+
+
 
 RegisterNetEvent('bp:server:giveKeys', function(netId)
     local src = source
@@ -53,11 +70,8 @@ RegisterNetEvent('bp:server:makeOwner', function(netId, modelName, mods)
         return nil
     end
     
-    
-
     local modelName = GetModelNameFromHash(hash) or "unknown"
 
-    -- Insert into database if not already owned
     local existing = MySQL.query.await('SELECT plate FROM player_vehicles WHERE plate = ?', { plate })
     if existing and existing[1] then
         print("Vehicle already exists in database with plate: " .. plate)
@@ -74,7 +88,6 @@ RegisterNetEvent('bp:server:makeOwner', function(netId, modelName, mods)
         print(("Inserted vehicle [%s] (%s) for %s"):format(plate, modelName, citizenid))
     end
 
-    -- Now set vehicle ownership through qbx_vehicles
     local success = exports.qbx_vehicles:SetPlayerVehicleOwner(plate, citizenid)
     if success then
         print(("Vehicle [%s] is now owned by %s"):format(plate, citizenid))
@@ -82,9 +95,6 @@ RegisterNetEvent('bp:server:makeOwner', function(netId, modelName, mods)
         print(("Failed to assign ownership for [%s] to %s"):format(plate, citizenid))
     end
 end)
-
-
-
 
 local function GiveBlueprintItem(source)
     local player = exports.qbx_core:GetPlayer(source)
@@ -114,7 +124,6 @@ local function GiveBlueprintItem(source)
         'boxville5_blueprint'
     }
     
-
     local selectedBlueprint = vehblueprints[math.random(#vehblueprints)]
 
     local added = exports.ox_inventory:AddItem(source, selectedBlueprint, 1)
@@ -137,9 +146,23 @@ local function GiveBlueprintItem(source)
     end
 end
 
+RegisterNetEvent('lx-vehicleblueprint:callBlueprints', function()
+    local src = source
+    local player = QBCore.Functions.GetPlayer(src)
+    if not player then return end
+
+    local citizenid = player.PlayerData.citizenid
+
+    exports.oxmysql:execute('SELECT model, x, y, z, heading FROM vehicle_blueprints WHERE citizenid = ?', {citizenid}, function(results)
+        if results and #results > 0 then
+            TriggerClientEvent('lx-vehicleblueprint:loadBlueprints', src, results)
+        end
+    end)
+end)
+
+-- Remove on live
 RegisterCommand('giveblueprint', function(source)
     if source == 0 then
-        print("This command must be run by a player.")
         return
     end
     GiveBlueprintItem(source)

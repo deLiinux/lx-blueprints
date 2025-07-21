@@ -4,7 +4,7 @@ game 'gta5'
 
 author 'Liinux'
 description 'Vehicle Blueprints'
-version '1.0.1'
+version '1.1.0'
 
 client_scripts {
     'client/*.lua',

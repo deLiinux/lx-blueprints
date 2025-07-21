@@ -3,8 +3,22 @@
 This resource is a script where players can place down a vehicle blueprint and proceed to build it with material.
 
 To add:
-Persist placed blueprints across restarts?
+Lock blueprint finish to player who placed it only.
 ...
+
+* SQL
+```
+CREATE TABLE IF NOT EXISTS `vehicle_blueprints` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `citizenid` VARCHAR(50) NOT NULL,
+    `model` VARCHAR(50) NOT NULL,
+    `x` DOUBLE NOT NULL,
+    `y` DOUBLE NOT NULL,
+    `z` DOUBLE NOT NULL,
+    `heading` DOUBLE NOT NULL,
+    `deleted` BOOLEAN DEFAULT FALSE
+);
+```
 
 * Items used in ox_inventory
 ```

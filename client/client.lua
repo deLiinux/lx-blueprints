@@ -1,6 +1,7 @@
 local QBCore = exports['qbx-core']:GetCoreObject()
 
 local vehicleRepairProgress = {} -- Table storing progress per vehicle
+local currentBuilds = currentBuilds or {}
 
 local function deleteVehicle(entity)
     if DoesEntityExist(entity) then
@@ -207,6 +208,8 @@ RegisterNetEvent('lx-vehicleblueprint:spawnStrippedVehicle', function(modelName,
     })
     placed
     isPlacingVehicle = false
+
+    table.insert(currentBuilds, vehicle)
 end)
 
 RegisterNetEvent('lx-vehicleblueprint:showRepairMenu', function(vehicle)
@@ -293,11 +296,9 @@ RegisterNetEvent('lx-vehicleblueprint:showRepairMenu', function(vehicle)
                     return
                 end
                 
-                -- Calculate how many irons we can add without exceeding required amount
                 local canAdd = requiredMaterials.iron - materials.iron
                 local toAdd = math.min(ironCount, canAdd)
                 
-                -- Remove multiple irons at once from inventory
                 TriggerServerEvent('ox_inventory:removeItem', 'iron', toAdd)
                 
                 materials.iron = materials.iron + toAdd
@@ -396,7 +397,7 @@ RegisterNetEvent('lx-vehicleblueprint:showRepairMenu', function(vehicle)
         
     }
 
-    -- Finish button only enabled when all wheels & materials done
+    -- Finish button only enabled when all wheels & materials are done
 
     if allMaterialsDone() then
         table.insert(options, {
@@ -470,3 +471,50 @@ QBCore.Functions.GetVehicleProperties = function(vehicle)
 
     return props
 end
+
+local function spawnBlueprints(blueprints)
+    for _, bp in ipairs(blueprints) do
+        local modelHash = GetHashKey(bp.model)
+        RequestModel(modelHash)
+        while not HasModelLoaded(modelHash) do
+            Citizen.Wait(10)
+        end
+
+        local vehicle = CreateVehicle(modelHash, bp.x, bp.y, bp.z, bp.heading, false, false)
+        SetVehicleEngineOn(vehicle, false, true, true)
+        SetVehicleDoorsLocked(vehicle, 2) -- lock doors
+        SetEntityAsMissionEntity(vehicle, true, true)
+
+        table.insert(currentBuilds, vehicle)
+    end
+end
+
+RegisterNetEvent('lx-vehicleblueprint:loadBlueprints', function(blueprints)
+    for _, bp in ipairs(blueprints) do
+        TriggerEvent('lx-vehicleblueprint:spawnStrippedVehicle', bp.model, {x = bp.x, y = bp.y, z = bp.z}, bp.heading)
+    end
+end)
+
+AddEventHandler('QBCore:Client:OnPlayerLoaded', function()
+    TriggerServerEvent('lx-vehicleblueprint:callBlueprints')
+end)
+
+AddEventHandler('playerDropped', function()
+    for _, veh in ipairs(currentBuilds) do
+        if DoesEntityExist(veh) then
+            DeleteVehicle(veh)
+        end
+    end
+    currentBuilds = {}
+end)
+
+AddEventHandler('onClientResourceStop', function(resourceName)
+    if resourceName == GetCurrentResourceName() then
+        for _, veh in ipairs(currentBuilds) do
+            if DoesEntityExist(veh) then
+                DeleteVehicle(veh)
+            end
+        end
+        currentBuilds = {}
+    end
+end)
