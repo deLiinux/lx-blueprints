@@ -42,11 +42,12 @@ for modelName, _ in pairs(QBCore.Shared.Vehicles) do
     table.insert(vehicleKeys, modelName)
 end
 
-local function startVehiclePlacement(model)
-
+local function startVehiclePlacement(model, callback)
     lib.showTextUI('ENTER - Place Vehicle  \n SCROLL - Rotate Vehicle  \n BACKSPACE - Cancel Placement', {position = 'left-center'})
+
     if isPlacingVehicle then
         TriggerEvent('ox_lib:notify', { type = 'error', description = 'You are already placing a vehicle.' })
+        if callback then callback(false) end
         return
     end
 
@@ -60,6 +61,7 @@ local function startVehiclePlacement(model)
 
     if not HasModelLoaded(modelHash) then
         TriggerEvent('ox_lib:notify', { type = 'error', description = 'Failed to load vehicle model.' })
+        if callback then callback(false) end
         return
     end
 
@@ -100,6 +102,7 @@ local function startVehiclePlacement(model)
                 TriggerServerEvent('lx-vehicleblueprint:placeStrippedVehicle', model, coords, rotation)
 
                 lib.hideTextUI()
+                if callback then callback(true) end
 
             elseif IsControlJustPressed(0, 202) then -- Cancel
                 placing = false
@@ -108,16 +111,22 @@ local function startVehiclePlacement(model)
                 isPlacingVehicle = false
 
                 lib.hideTextUI()
-
                 TriggerEvent('ox_lib:notify', { type = 'info', description = 'Vehicle placement cancelled.' })
+                if callback then callback(false) end
             end
         end
     end)
 end
 
+
+
 local function BlueprintEvent(eventName, model)
     RegisterNetEvent(eventName, function(item)
-        startVehiclePlacement(model)
+        startVehiclePlacement(model, function(placed)
+            if placed then
+                TriggerServerEvent('ox_inventory:removeItem', item, 1)
+            end
+        end)
     end)
 end
 
@@ -142,7 +151,6 @@ BlueprintEvent('lx-vehicleblueprint:manchez3Blueprint'      ,   'manchez3')
 BlueprintEvent('lx-vehicleblueprint:ratbikeBlueprint'       ,   'ratbike')
 BlueprintEvent('lx-vehicleblueprint:technicalBlueprint'     ,   'technical')
 BlueprintEvent('lx-vehicleblueprint:boxville5Blueprint'     ,   'boxville5')
-
 
 -- RegisterNetEvent('lx-vehicleblueprint:supervolitoBlueprint', function()
 --     startVehiclePlacement('supervolito')
@@ -187,7 +195,6 @@ RegisterNetEvent('lx-vehicleblueprint:spawnStrippedVehicle', function(modelName,
     FreezeEntityPosition(vehicle, true)
     SetModelAsNoLongerNeeded(modelHash)
     
-
     -- ox_target interaction opens menu
     exports.ox_target:addLocalEntity(vehicle, {
         {
@@ -198,6 +205,7 @@ RegisterNetEvent('lx-vehicleblueprint:spawnStrippedVehicle', function(modelName,
             end
         }
     })
+    placed
     isPlacingVehicle = false
 end)
 
